@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import PostContainer from "./components/Post/PostContainer";
+import PostForm from "./components/Post/PostForm";
+
 
 function App() {
+
+  const [posts, setPosts] = useState([
+    {id: 1, title: 'Javascript'},
+    {id: 2, title: 'Python'}
+  ])
+
+  const removePost = (item) => {
+    setPosts(posts.filter(p => p.id !== item.id))
+  }
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <PostForm create={createPost}/>
+        <PostContainer posts={posts} remove={removePost}/>
     </div>
   );
 }
